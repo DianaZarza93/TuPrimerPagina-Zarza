@@ -1,0 +1,12 @@
+<h2>Archivos en "{{ carpeta.nombre }}"</h2>
+<ul>
+  {% for archivo in archivos %}
+    <li>
+      <a href="{{ archivo.archivo.url }}" download>{{ archivo.nombre_original }}</a> ({{ archivo.fecha_subida|date:"d M Y H:i" }})
+    </li>
+  {% empty %}
+    <li>No hay archivos aún.</li>
+  {% endfor %}
+</ul>
+<a href="{% url 'subir_archivo' carpeta.id %}">Subir otro archivo</a> |
+<a href="{% url 'lista_carpetas' %}">Volver a carpetas</a>

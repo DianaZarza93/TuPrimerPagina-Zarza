@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Mi Web Arquitectura{% endblock %}</title>
+    <style>
+    body {
+        background: url("https://i.imgur.com/Yz4pS8P.jpg") no-repeat center center fixed;
+        background-size: cover;
+        color: #dcdcdc;
+        font-family: 'Georgia', serif;
+        margin: 0;
+        padding: 0;
+    }
+
+        header, footer {
+            background-color: #111;
+            text-align: center;
+            padding: 1em;
+            border-bottom: 1px solid #444;
+        }
+        header h1 {
+            font-size: 2em;
+            color: #e0e0e0;
+        }
+        nav a {
+            color: #c0a060;
+            margin: 0 1em;
+            text-decoration: none;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        main {
+            padding: 2em;
+            max-width: 800px;
+            margin: auto;
+            background-color: rgba(0, 0, 0, 0.6);  /* fondo oscuro semitransparente */
+            border-radius: 10px;
+        }
+
+        .btn {
+            background-color: #2e2e2e;
+            border: 1px solid #444;
+            color: #dcdcdc;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1em;
+        }
+        .btn:hover {
+            background-color: #444;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Arquitectura Oscura</h1>
+        <nav>
+            <a href="{% url 'home' %}">Inicio</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'lista_materias' %}">Materias</a>
+                <a href="{% url 'lista_carpetas' %}">Carpetas</a>
+                <a href="{% url 'logout' %}">Cerrar sesión</a>
+            {% else %}
+                <a href="{% url 'login' %}">Iniciar sesión</a>
+                <a href="{% url 'register' %}">Registrarse</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2025 - Señor Patroclo en Yharnam 🦇</p>
+    </footer>
+</body>
+</html>

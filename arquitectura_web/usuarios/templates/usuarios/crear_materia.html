@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Nueva Materia{% endblock %}
+
+{% block content %}
+<h2>Nueva materia</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+</form>
+<a href="{% url 'lista_materias' %}">Volver a materias</a>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Buscar Carpetas{% endblock %}
+
+{% block content %}
+<h2>Buscar Carpetas</h2>
+
+<form method="get">
+    <input type="text" name="q" placeholder="Nombre de la carpeta" value="{{ query }}">
+    <button type="submit">Buscar</button>
+</form>
+
+{% if query %}
+    <h3>Resultados para "{{ query }}":</h3>
+    <ul>
+    {% for carpeta in resultados %}
+        <li>
+            {{ carpeta.nombre }} - <a href="{% url 'ver_archivos' carpeta.id %}">Ver archivos</a>
+        </li>
+    {% empty %}
+        <li>No se encontraron carpetas con ese nombre.</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

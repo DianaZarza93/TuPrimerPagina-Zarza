@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Bienvenido, Señor Patroclo{% endblock %}
+
+{% block content %}
+<h2 style="font-style: italic; text-align: center;">Bienvenido a tu Web, Señor Patroclo</h2>
+
+<p style="text-align: center;">
+    Esta es tu fortaleza digital. Aquí podrás guardar tus carpetas y archivos por materia, desde cualquier rincón de Yharnam... o del mundo real.
+</p>
+
+{% if user.is_authenticated %}
+    <div style="text-align: center;">
+        <a class="btn" href="{% url 'lista_materias' %}">Ir a tus materias</a>
+        <a class="btn" href="{% url 'lista_carpetas' %}">Ir a tus carpetas</a>
+    </div>
+{% else %}
+    <div style="text-align: center;">
+        <a class="btn" href="{% url 'login' %}">Iniciar sesión</a>
+        <a class="btn" href="{% url 'register' %}">Registrarse</a>
+    </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,7 @@
+<h2>Crear nueva carpeta</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Crear</button>
+</form>
+<a href="{% url 'lista_carpetas' %}">Volver a mis carpetas</a>

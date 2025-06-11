@@ -1,0 +1,15 @@
+<h2>Mis carpetas</h2>
+
+<ul>
+  {% for carpeta in carpetas %}
+    <li>
+      <strong>{{ carpeta.nombre }}</strong> ({{ carpeta.fecha_creacion|date:"d M Y" }})<br>
+      <a href="{% url 'ver_archivos' carpeta.id %}">📁 Ver archivos</a> |
+      <a href="{% url 'subir_archivo' carpeta.id %}">⬆️ Subir archivo</a>
+    </li>
+  {% empty %}
+    <li>No tenés carpetas todavía.</li>
+  {% endfor %}
+</ul>
+
+<a href="{% url 'crear_carpeta' %}">➕ Crear nueva carpeta</a>
