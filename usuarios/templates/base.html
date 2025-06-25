@@ -108,13 +108,12 @@
                     <a href="{% url 'lista_materias' %}">Materias</a>
                     <a href="{% url 'about' %}">Sobre mí</a>
                     {% if user.is_authenticated %}
-                        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                        <form method="post" action="{% url 'logout' %}" style="display:inline;">
                             {% csrf_token %}
-                            <button type="submit" class="btn" style="border: none; background: none; padding: 0; font: inherit; color: inherit; cursor: pointer;">
-                              <span class="btn">Cerrar sesión</span>
+                            <button type="submit" class="btn" style="background-color: transparent; border: none; color: #c0a060; font-weight: bold; font-size: 1em; padding: 0; margin: 0 10px; cursor: pointer;">
+                                Cerrar sesión
                             </button>
                         </form>
-
                     {% else %}
                         <a href="{% url 'login' %}">Iniciar sesión</a>
                         <a href="{% url 'register' %}">Registrarse</a>

@@ -8,7 +8,9 @@
 <ul>
   {% for archivo in archivos %}
     <li>
-      📄 <a href="{{ archivo.archivo.url }}" download>{{ archivo.nombre_original }}</a>
+      📄 <a href="{{ archivo.archivo.url }}" download>{{ archivo.nombre_original }}
+        <a href="{% url 'eliminar_archivo' carpeta.id archivo.id %}">❌ Eliminar</a>
+      </a>
     </li>
   {% empty %}
     <li>No hay archivos en esta carpeta.</li>
@@ -17,6 +19,5 @@
 
 <br>
 <a href="{% url 'subir_archivo' carpeta.id %}" class="btn">Subir nuevo archivo</a>
-<a href="{% url 'eliminar_archivo' carpeta.id archivo.id %}">❌ Eliminar</a>
 <a href="{% url 'lista_carpetas' %}" class="btn">Volver a carpetas</a>
 {% endblock %}

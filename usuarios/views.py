@@ -142,3 +142,6 @@ def eliminar_archivo(request, carpeta_id, pk):
         archivo.delete()
         return redirect('ver_archivos', carpeta_id=carpeta_id)
     return render(request, 'usuarios/archivo_confirm_delete.html', {'archivo': archivo})
+
+def home_view(request):
+    return render(request, 'home.html')

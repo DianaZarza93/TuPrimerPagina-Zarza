@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ( login_view, register_view, buscar_carpetas, eliminar_archivo )
+from .views import ( login_view, register_view, buscar_carpetas, eliminar_archivo, home_view)
 from .views import ( CarpetaListView, CarpetaCreateView, ArchivoCreateView, ArchivoListView, CarpetaDeleteView)
 from .views import ( MateriaListView, MateriaDetailView, MateriaCreateView, MateriaDeleteView)
 from django.contrib.auth.views import LogoutView
@@ -10,6 +10,7 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('register/', register_view, name='register'),
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
+    path('', home_view, name='home'),
     path('carpetas/', CarpetaListView.as_view(), name='lista_carpetas'),
     path('carpetas/nueva/', CarpetaCreateView.as_view(), name='crear_carpeta'),
     path('carpetas/<int:carpeta_id>/subir/', ArchivoCreateView.as_view(), name='subir_archivo'),
