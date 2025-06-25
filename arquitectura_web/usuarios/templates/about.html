@@ -3,20 +3,11 @@
 {% block title %}Sobre el Proyecto{% endblock %}
 
 {% block content %}
-<h2>Sobre el Proyecto</h2>
-<p>Hola, soy Diana Zarza (alias Señor Patroclo 👤). Esta es mi entrega final del curso de Django.</p>
+<h2>Acerca del Proyecto</h2>
 
-<p>Desarrollé una aplicación para estudiantes de arquitectura que permite:</p>
-<ul>
-    <li>Crear carpetas por materia</li>
-    <li>Subir y descargar archivos</li>
-    <li>Buscar contenido guardado</li>
-    <li>Acceder desde cualquier dispositivo</li>
-</ul>
+<p>Este proyecto fue creado por <strong>Zarza Diana</strong> como entrega final del curso de Python/Django en CoderHouse.</p>
+<p>La plataforma permite a estudiantes de arquitectura gestionar carpetas y archivos por materia, con acceso desde cualquier dispositivo.</p>
+<p>El diseño está inspirado en la estética de <em>Bloodborne</em>, con una interfaz oscura y gótica.</p>
 
-<p>El diseño está inspirado en el videojuego <strong>Bloodborne</strong> 🦇 por su estilo gótico y oscuro.</p>
-
-<p>Este proyecto fue realizado con mucho esfuerzo, pasión por la tecnología, y cafeína ☕.</p>
-
-<p>Gracias por visitar mi web 👩‍💻</p>
+<a href="{% url 'home' %}" class="btn">Volver al inicio</a>
 {% endblock %}

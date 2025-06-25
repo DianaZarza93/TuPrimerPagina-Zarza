@@ -8,14 +8,14 @@
 <ul>
     {% for materia in materias %}
         <li>
-            <strong>{{ materia.nombre }}</strong> (Cuatrimestre: {{ materia.cuatrimestre }})
-            <br>
-            <a class="btn" href="{% url 'detalle_materia' materia.pk %}">Ver detalle</a>
+            <a href="{% url 'detalle_materia' materia.pk %}">{{ materia.nombre }}</a> 
+            (Cuatrimestre: {{ materia.cuatrimestre }})
         </li>
     {% empty %}
         <li>No hay materias cargadas aún.</li>
     {% endfor %}
 </ul>
 
-<a class="btn" href="{% url 'crear_materia' %}">➕ Agregar nueva materia</a>
+<a href="{% url 'crear_materia' %}" class="btn">➕ Agregar nueva materia</a><br><br>
+<a href="{% url 'home' %}" class="btn">Volver al inicio</a>
 {% endblock %}

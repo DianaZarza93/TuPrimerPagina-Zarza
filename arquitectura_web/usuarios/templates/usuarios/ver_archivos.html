@@ -1,12 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Archivos de {{ carpeta.nombre }}{% endblock %}
+
+{% block content %}
 <h2>Archivos en "{{ carpeta.nombre }}"</h2>
+
 <ul>
   {% for archivo in archivos %}
     <li>
-      <a href="{{ archivo.archivo.url }}" download>{{ archivo.nombre_original }}</a> ({{ archivo.fecha_subida|date:"d M Y H:i" }})
+      📄 <a href="{{ archivo.archivo.url }}" download>{{ archivo.nombre_original }}</a>
     </li>
   {% empty %}
-    <li>No hay archivos aún.</li>
+    <li>No hay archivos en esta carpeta.</li>
   {% endfor %}
 </ul>
-<a href="{% url 'subir_archivo' carpeta.id %}">Subir otro archivo</a> |
-<a href="{% url 'lista_carpetas' %}">Volver a carpetas</a>
+
+<br>
+<a href="{% url 'subir_archivo' carpeta.id %}" class="btn">Subir nuevo archivo</a>
+<a href="{% url 'lista_carpetas' %}" class="btn">Volver a carpetas</a>
+{% endblock %}

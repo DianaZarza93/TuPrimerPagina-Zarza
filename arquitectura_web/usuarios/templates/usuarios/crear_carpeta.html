@@ -1,7 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Crear Carpeta{% endblock %}
+
+{% block content %}
 <h2>Crear nueva carpeta</h2>
+
 <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Crear</button>
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn">Guardar carpeta</button>
 </form>
-<a href="{% url 'lista_carpetas' %}">Volver a mis carpetas</a>
+
+<br>
+<a href="{% url 'lista_carpetas' %}" class="btn">Volver a carpetas</a>
+{% endblock %}

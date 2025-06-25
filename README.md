@@ -10,62 +10,40 @@ Profesor: Estevan H. Acevedo
 
 Nombre: Diana Zarza
 
-## 🏛 Web de Arquitectura - Proyecto Final Django
+# 🌐 Tu Web de Arquitectura - Proyecto Final
 
-Este es mi proyecto final desarrollado en Django, inspirado visualmente en *Bloodborne*. Permite a estudiantes de arquitectura guardar carpetas por materia, subir y descargar archivos, y acceder desde cualquier dispositivo.
+Este proyecto fue desarrollado como entrega final del curso de Python/Django en CoderHouse por **Zarza Diana**.
 
----
-
-## 🎯 Objetivos del Proyecto
-
-- Crear una web con Django usando el patrón **MVT**
-- Utilizar **herencia de plantillas HTML**
-- Tener **3 modelos** en la base de datos
-- Crear formularios para insertar datos en cada modelo
-- Implementar un formulario para **buscar** en la base de datos
-- Añadir autenticación de usuarios
+> 🎮 Inspirado visualmente en *Bloodborne*, con una estética gótica y oscura.
 
 ---
 
-## 🛠 Tecnologías utilizadas
+## 📌 Funcionalidades principales
 
-- Python 3.13
-- Django 5.2.3
-- HTML + CSS personalizado estilo *Bloodborne*
-- SQLite3 (base de datos por defecto de Django)
-
----
-
-## 🧩 Modelos
-
-1. **Materia**
-   - Nombre
-   - Cuatrimestre
-
-2. **Carpeta**
-   - Nombre
-   - Usuario (relación con usuario de Django)
-   - Materia (relación con `Materia`)
-   - Fecha de creación
-
-3. **Archivo**
-   - Archivo (documento subido)
-   - Carpeta (relación con `Carpeta`)
-   - Nombre original
-   - Fecha de subida
+- Registro e inicio de sesión de usuarios.
+- Creación y gestión de carpetas por usuario.
+- Subida y descarga de archivos en carpetas privadas.
+- Administración de materias (nombre, cuatrimestre y fecha).
+- Formulario de búsqueda de carpetas por nombre.
+- Herencia de plantillas para un diseño unificado.
+- Menú de navegación accesible desde cualquier sección.
+- Página "about" con información del proyecto.
+- CRUD completo sobre el modelo `Materia`.
 
 ---
 
-## 🧪 Funcionalidades implementadas
+## 🏗️ Estructura del proyecto
 
-✅ Registro e inicio de sesión de usuarios  
-✅ Creación de materias  
-✅ Creación de carpetas vinculadas a materias  
-✅ Subida de archivos por carpeta  
-✅ Descarga de archivos  
-✅ Búsqueda de carpetas por nombre  
-✅ Herencia de plantillas con `base.html`  
-✅ Estilo gótico inspirado en *Bloodborne*
+- **usuarios/**: App principal, contiene views, templates, models, urls.
+- **arquitectura_web/**: Proyecto Django con configuración global.
+- **templates/**: Carpeta con plantillas HTML heredadas.
+- **media/**: Carpeta para archivos subidos por los usuarios.
 
 ---
-PD: Falta varias cosas por trabajar pero al menos es hasta donde llegue, para la entrega final va a estar mas prolijo.
+
+## 🧪 ¿Cómo probarlo?
+
+1. Cloná el repositorio:
+   ```bash
+   git clone https://github.com/tuusuario/tu-repo.git
+   cd tu-repo

@@ -1,14 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <h2>Iniciar sesión</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Entrar</button>
-    </form>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block content %}
+<h2>Iniciar Sesión</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn">Entrar</button>
+</form>
+
+<br>
+<p>¿No tenés cuenta? <a href="{% url 'register' %}">Registrate acá</a></p>
+<a href="{% url 'home' %}" class="btn">Volver al inicio</a>
+{% endblock %}
