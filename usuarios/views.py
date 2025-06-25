@@ -10,7 +10,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView
 from django.utils.decorators import method_decorator
-
+from django.shortcuts import get_object_or_404
 
 def login_view(request):
     if request.method == 'POST':
@@ -126,3 +126,19 @@ class ArchivoListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['carpeta'] = Carpeta.objects.get(id=self.kwargs['carpeta_id'], usuario=self.request.user)
         return context
+
+class CarpetaDeleteView(LoginRequiredMixin, DeleteView):
+    model = Carpeta
+    template_name = 'usuarios/carpeta_confirm_delete.html'
+    success_url = reverse_lazy('lista_carpetas')
+
+    def get_queryset(self):
+        return Carpeta.objects.filter(usuario=self.request.user)
+    
+@login_required
+def eliminar_archivo(request, carpeta_id, pk):
+    archivo = get_object_or_404(Archivo, pk=pk, carpeta_id=carpeta_id, carpeta__usuario=request.user)
+    if request.method == 'POST':
+        archivo.delete()
+        return redirect('ver_archivos', carpeta_id=carpeta_id)
+    return render(request, 'usuarios/archivo_confirm_delete.html', {'archivo': archivo})
