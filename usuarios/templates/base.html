@@ -110,8 +110,11 @@
                     {% if user.is_authenticated %}
                         <form method="post" action="{% url 'logout' %}" style="display: inline;">
                             {% csrf_token %}
-                            <button type="submit" class="btn">Cerrar sesión</button>
+                            <button type="submit" class="btn" style="border: none; background: none; padding: 0; font: inherit; color: inherit; cursor: pointer;">
+                              <span class="btn">Cerrar sesión</span>
+                            </button>
                         </form>
+
                     {% else %}
                         <a href="{% url 'login' %}">Iniciar sesión</a>
                         <a href="{% url 'register' %}">Registrarse</a>
