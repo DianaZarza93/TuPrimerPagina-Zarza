@@ -9,7 +9,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('login/', login_view, name='login'),
     path('register/', register_view, name='register'),
-    path('logout/', LogoutView.as_view(), name='logout'),
+    path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
     path('carpetas/', CarpetaListView.as_view(), name='lista_carpetas'),
     path('carpetas/nueva/', CarpetaCreateView.as_view(), name='crear_carpeta'),
     path('carpetas/<int:carpeta_id>/subir/', ArchivoCreateView.as_view(), name='subir_archivo'),
