@@ -1,24 +1,23 @@
 from django.urls import path
-from .views import ( login_view, 
-                    register_view, 
-                    crear_carpeta, 
-                    lista_carpetas, 
-                    subir_archivo, 
-                    ver_archivos, 
-                    crear_materia, 
-                    lista_materias,
-                    buscar_carpetas )
+from .views import ( login_view, register_view, buscar_carpetas )
+from .views import ( CarpetaListView, CarpetaCreateView, ArchivoCreateView, ArchivoListView)
+from .views import ( MateriaListView, MateriaDetailView, MateriaCreateView, MateriaDeleteView)
 from django.contrib.auth.views import LogoutView
+from django.views.generic import TemplateView
+
 
 urlpatterns = [
     path('login/', login_view, name='login'),
     path('register/', register_view, name='register'),
     path('logout/', LogoutView.as_view(), name='logout'),
-    path('carpetas/', lista_carpetas, name='lista_carpetas'),
-    path('carpetas/nueva/', crear_carpeta, name='crear_carpeta'),
-    path('carpetas/<int:carpeta_id>/subir/', subir_archivo, name='subir_archivo'),
-    path('carpetas/<int:carpeta_id>/archivos/', ver_archivos, name='ver_archivos'),      
-    path('materias/', lista_materias, name='lista_materias'),
-    path('materias/nueva/', crear_materia, name='crear_materia'),
+    path('carpetas/', CarpetaListView.as_view(), name='lista_carpetas'),
+    path('carpetas/nueva/', CarpetaCreateView.as_view(), name='crear_carpeta'),
+    path('carpetas/<int:carpeta_id>/subir/', ArchivoCreateView.as_view(), name='subir_archivo'),
+    path('carpetas/<int:carpeta_id>/archivos/', ArchivoListView.as_view(), name='ver_archivos'),
     path('carpetas/buscar/', buscar_carpetas, name='buscar_carpetas'),
+    path('materias/', MateriaListView.as_view(), name='lista_materias'),
+    path('materias/nueva/', MateriaCreateView.as_view(), name='crear_materia'),
+    path('materias/<int:pk>/', MateriaDetailView.as_view(), name='detalle_materia'),  # 👈 esta es clave
+    path('materias/<int:pk>/eliminar/', MateriaDeleteView.as_view(), name='eliminar_materia'),
+    path('about/', TemplateView.as_view(template_name='about.html'), name='about'),
 ]

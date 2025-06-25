@@ -5,7 +5,11 @@ from django.contrib.auth.decorators import login_required
 from .models import Materia, Carpeta, Archivo
 from .forms import MateriaForm, CarpetaForm, ArchivoForm
 from django.db.models import Q
-
+from django.views.generic import ListView, DetailView, CreateView, DeleteView
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, CreateView
+from django.utils.decorators import method_decorator
 
 
 def login_view(request):
@@ -30,64 +34,6 @@ def register_view(request):
         form = UserCreationForm()
     return render(request, 'usuarios/register.html', {'form': form})
 
-
-@login_required
-def crear_carpeta(request):
-    if request.method == 'POST':
-        form = CarpetaForm(request.POST)
-        if form.is_valid():
-            carpeta = form.save(commit=False)
-            carpeta.usuario = request.user
-            carpeta.save()
-            return redirect('lista_carpetas')
-    else:
-        form = CarpetaForm()
-    return render(request, 'usuarios/crear_carpeta.html', {'form': form})
-
-@login_required
-def lista_carpetas(request):
-    carpetas = Carpeta.objects.filter(usuario=request.user)
-    return render(request, 'usuarios/lista_carpetas.html', {'carpetas': carpetas})
-
-@login_required
-def subir_archivo(request, carpeta_id):
-    carpeta = Carpeta.objects.get(id=carpeta_id, usuario=request.user)
-
-    if request.method == 'POST':
-        form = ArchivoForm(request.POST, request.FILES)
-        if form.is_valid():
-            archivo = form.save(commit=False)
-            archivo.carpeta = carpeta
-            archivo.nombre_original = archivo.archivo.name
-            archivo.save()
-            return redirect('ver_archivos', carpeta_id=carpeta.id)
-    else:
-        form = ArchivoForm()
-
-    return render(request, 'usuarios/subir_archivo.html', {'form': form, 'carpeta': carpeta})
-
-@login_required
-def ver_archivos(request, carpeta_id):
-    carpeta = Carpeta.objects.get(id=carpeta_id, usuario=request.user)
-    archivos = carpeta.archivo_set.all()
-    return render(request, 'usuarios/ver_archivos.html', {'carpeta': carpeta, 'archivos': archivos})
-
-@login_required
-def crear_materia(request):
-    if request.method == 'POST':
-        form = MateriaForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('lista_materias')
-    else:
-        form = MateriaForm()
-    return render(request, 'usuarios/crear_materia.html', {'form': form})
-
-@login_required
-def lista_materias(request):
-    materias = Materia.objects.all()
-    return render(request, 'usuarios/lista_materias.html', {'materias': materias})
-
 @login_required
 def buscar_carpetas(request):
     query = request.GET.get('q')
@@ -103,3 +49,80 @@ def buscar_carpetas(request):
         'resultados': resultados,
         'query': query,
     })
+
+
+class MateriaListView(ListView):
+    model = Materia
+    template_name = 'usuarios/materia_list.html'
+    context_object_name = 'materias'
+
+class MateriaDetailView(DetailView):
+    model = Materia
+    template_name = 'usuarios/materia_detail.html'
+
+class MateriaCreateView(CreateView):
+    model = Materia
+    fields = ['nombre', 'cuatrimestre', 'fecha_creacion']
+    template_name = 'usuarios/materia_form.html'
+    success_url = reverse_lazy('lista_materias')
+
+class MateriaDeleteView(DeleteView):
+    model = Materia
+    template_name = 'usuarios/materia_confirm_delete.html'
+    success_url = reverse_lazy('lista_materias')
+
+# Vista para listar carpetas del usuario
+class CarpetaListView(LoginRequiredMixin, ListView):
+    model = Carpeta
+    template_name = 'usuarios/lista_carpetas.html'
+    context_object_name = 'carpetas'
+
+    def get_queryset(self):
+        return Carpeta.objects.filter(usuario=self.request.user)
+
+# Vista para crear una carpeta
+class CarpetaCreateView(LoginRequiredMixin, CreateView):
+    model = Carpeta
+    form_class = CarpetaForm
+    template_name = 'usuarios/crear_carpeta.html'
+    success_url = reverse_lazy('lista_carpetas')
+
+    def form_valid(self, form):
+        form.instance.usuario = self.request.user
+        return super().form_valid(form)
+
+# Vista para subir archivo a una carpeta
+class ArchivoCreateView(LoginRequiredMixin, CreateView):
+    model = Archivo
+    form_class = ArchivoForm
+    template_name = 'usuarios/subir_archivo.html'
+
+    def form_valid(self, form):
+        carpeta_id = self.kwargs['carpeta_id']
+        carpeta = Carpeta.objects.get(id=carpeta_id, usuario=self.request.user)
+        form.instance.carpeta = carpeta
+        form.instance.nombre_original = form.instance.archivo.name
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('ver_archivos', kwargs={'carpeta_id': self.kwargs['carpeta_id']})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['carpeta'] = Carpeta.objects.get(id=self.kwargs['carpeta_id'], usuario=self.request.user)
+        return context
+
+# Vista para ver archivos de una carpeta
+class ArchivoListView(LoginRequiredMixin, ListView):
+    model = Archivo
+    template_name = 'usuarios/ver_archivos.html'
+    context_object_name = 'archivos'
+
+    def get_queryset(self):
+        carpeta_id = self.kwargs['carpeta_id']
+        return Archivo.objects.filter(carpeta__id=carpeta_id, carpeta__usuario=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['carpeta'] = Carpeta.objects.get(id=self.kwargs['carpeta_id'], usuario=self.request.user)
+        return context
